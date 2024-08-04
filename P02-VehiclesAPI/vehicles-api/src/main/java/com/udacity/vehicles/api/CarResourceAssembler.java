@@ -17,10 +17,5 @@ public class CarResourceAssembler implements RepresentationModelAssembler<Car, E
         return EntityModel.of(car,
                 WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CarController.class).get(car.getId())).withSelfRel(),
                 WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CarController.class).list()).withRel("cars"));
-
-//        return new EntityModel<>(car,
-//                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CarController.class).get(car.getId())).withSelfRel(),
-//                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CarController.class).list()).withRel("cars"));
-
     }
 }

@@ -7,15 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 //@RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,11 +29,6 @@ public class PricingServiceApplicationTests {
 
 	@MockBean
 	PricingService pricingService;
-
-//	@BeforeEach
-//	void setUp() {
-//		pricingService = new PricingService();
-//	}
 
 	@Test
 	public void getPrice() throws Exception {
@@ -49,9 +45,19 @@ public class PricingServiceApplicationTests {
 		verify(pricingService, times(1)).getPrice(1L);
 	}
 
-//	@Test
-//	public void contextLoads() {
-//
-//	}
+	@Test
+	public void contextLoads() {
+
+	}
+
+	@Test
+	public void testPriceNotFound() throws Exception {
+		when(pricingService.getPrice(99999L)).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Price Not Found"));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/services/price?vehicleId=99999"))
+				.andExpect(status().isNotFound());
+
+		verify(pricingService, times(1)).getPrice(99999L);
+	}
 
 }
