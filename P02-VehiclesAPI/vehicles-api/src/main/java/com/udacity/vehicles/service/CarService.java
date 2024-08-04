@@ -2,8 +2,9 @@ package com.udacity.vehicles.service;
 
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Implements the car service create, read, update or delete
