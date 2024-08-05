@@ -6,6 +6,7 @@ package com.udacity.vehicles.api;
 
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.service.CarService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -37,6 +38,7 @@ class CarController {
      * Creates a list to store any vehicles.
      * @return list of vehicles
      */
+    @Operation(summary = "Get list of vehicles")
     @GetMapping
     CollectionModel<EntityModel<Car>> list() {
         List<EntityModel<Car>> resources = carService.list().stream().map(assembler::toModel)
@@ -55,6 +57,7 @@ class CarController {
      * @param id the id number of the given vehicle
      * @return all information for the requested vehicle
      */
+    @Operation(summary = "Get all information for the requested vehicle")
     @GetMapping("/{id}")
     EntityModel<Car> get(@PathVariable Long id) {
         /**
@@ -71,6 +74,7 @@ class CarController {
      * @return response that the new vehicle was added to the system
      * @throws URISyntaxException if the request contains invalid fields or syntax
      */
+    @Operation(summary = "Post information to create a new vehicle in the system")
     @PostMapping
     ResponseEntity<?> post(@Valid @RequestBody Car car) throws URISyntaxException {
         /**
@@ -97,6 +101,7 @@ class CarController {
      * @param car The updated information about the related vehicle.
      * @return response that the vehicle was updated in the system
      */
+    @Operation(summary = "Updates the information of a vehicle in the system.")
     @PutMapping("/{id}")
     ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) {
         /**
@@ -116,6 +121,7 @@ class CarController {
      * @param id The ID number of the vehicle to remove.
      * @return response that the related vehicle is no longer in the system
      */
+    @Operation(summary = "Removes a vehicle from the system")
     @DeleteMapping("/{id}")
     ResponseEntity<?> delete(@PathVariable Long id) {
         /**
